@@ -14,7 +14,12 @@ public class ValidateSBNTest {
         result = validateSBN.checkISBN("0140177396");
         assertTrue("Second value", result);
     }
-
+    @Test
+    public void ISBNNumbersEndingAnXAreValid() {
+        ValidateSBN validateSBN = new ValidateSBN();
+        boolean result = validateSBN.checkISBN("012000030X");
+        assertTrue(result);
+    }
     @Test
     public void checkAnInvalidISBN() {
         ValidateSBN validateSBN = new ValidateSBN();
@@ -27,5 +32,10 @@ public class ValidateSBNTest {
         ValidateSBN validateSBN = new ValidateSBN();
         validateSBN.checkISBN("123456789");
 
+    }
+    @Test(expected  = NumberFormatException.class)
+    public void notNumbericISBNAreNotAllowed() {
+        ValidateSBN validateSBN = new ValidateSBN();
+        validateSBN.checkISBN("helloworld");
     }
 }
