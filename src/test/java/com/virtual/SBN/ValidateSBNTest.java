@@ -21,7 +21,13 @@ public class ValidateSBNTest {
         assertTrue(result);
     }
     @Test
-    public void checkAnInvalidISBN() {
+    public void checkValid13DigitsISBN() {
+        ValidateSBN validateSBN = new ValidateSBN();
+        boolean result = validateSBN.checkISBN("9781853260087");
+        assertTrue(result);
+    }
+    @Test
+    public void checkAnInval10idISBN() {
         ValidateSBN validateSBN = new ValidateSBN();
         boolean result = validateSBN.checkISBN("0140449117");
         assertFalse(result);
