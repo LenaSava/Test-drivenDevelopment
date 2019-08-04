@@ -8,41 +8,54 @@ import static org.mockito.Mockito.*;
 public class ValidateSBNTest {
 
     @Test
-    public void checkISBN() {
-        ValidateSBN validateSBN = new ValidateSBN();
-        boolean result = validateSBN.checkISBN("0140449116");
-        assertTrue("First value", result);
-        result = validateSBN.checkISBN("0140177396");
-        assertTrue("Second value", result);
+    public void checkAValid10DigitISBN() {
+        ValidateSBN validator = new ValidateSBN();
+        boolean result = validator.checkISBN("0140449116");
+        assertTrue("first value", result);
+        result = validator.checkISBN("0140177396");
+        assertTrue("second value", result);
     }
+
     @Test
-    public void ISBNNumbersEndingAnXAreValid() {
-        ValidateSBN validateSBN = new ValidateSBN();
-        boolean result = validateSBN.checkISBN("012000030X");
+    public void checkAValid13DigitISBN() {
+        ValidateSBN validator = new ValidateSBN();
+        boolean result = validator.checkISBN("9781853260087");
+        assertTrue("first value", result);
+        result = validator.checkISBN("9781853267338");
+        assertTrue("second value", result);
+    }
+
+    @Test
+    public void TenDigitISBNNumbersEndingInAnXAreValid() {
+        ValidateSBN validator = new ValidateSBN();
+        boolean result = validator.checkISBN("012000030X");
         assertTrue(result);
     }
+
     @Test
-    public void checkValid13DigitsISBN() {
-        ValidateSBN validateSBN = new ValidateSBN();
-        boolean result = validateSBN.checkISBN("9781853260087");
-        assertTrue(result);
-    }
-    @Test
-    public void checkAnInval10idISBN() {
-        ValidateSBN validateSBN = new ValidateSBN();
-        boolean result = validateSBN.checkISBN("0140449117");
+    public void checkAnInvalid10DigitISBN() {
+        ValidateSBN validator = new ValidateSBN();
+        boolean result = validator.checkISBN("0140449117");
         assertFalse(result);
     }
 
-    @Test(expected  = NumberFormatException.class)
-    public  void nineDegit() {
-        ValidateSBN validateSBN = new ValidateSBN();
-        validateSBN.checkISBN("123456789");
+    @Test
+    public void checkAnInvalid13DigitISBN() {
+        ValidateSBN validator = new ValidateSBN();
+        boolean result = validator.checkISBN("9781853267336");
+        assertFalse(result);
+    }
 
+    @Test(expected = NumberFormatException.class)
+    public void nineDigitISBNsAreNotAllowed() {
+        ValidateSBN validator = new ValidateSBN();
+        validator.checkISBN("123456789");
     }
-    @Test(expected  = NumberFormatException.class)
-    public void notNumbericISBNAreNotAllowed() {
-        ValidateSBN validateSBN = new ValidateSBN();
-        validateSBN.checkISBN("helloworld");
+
+    @Test(expected = NumberFormatException.class)
+    public void nonNumericISBNsAreNotAllowed() {
+        ValidateSBN validator = new ValidateSBN();
+        validator.checkISBN("helloworld");
     }
+
 }
